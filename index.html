@@ -588,6 +588,45 @@ textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 1
   text-transform: uppercase;
 }
 .disconnected-banner.visible { display: block; }
+/* SERVER CONFIG */
+.server-config-row { display: flex; gap: 4px; margin-bottom: 6px; }
+.server-url-input {
+  flex: 1;
+  background: var(--panel);
+  border: 1px solid var(--border-hi);
+  color: var(--bone);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  padding: 6px 8px;
+  outline: none;
+  height: auto;
+  min-height: unset;
+  resize: none;
+}
+.server-url-input:focus { border-color: var(--brass-bright); }
+.server-url-input::placeholder { color: var(--bone-dim); font-style: normal; font-size: 9px; }
+.server-connect-btn {
+  background: var(--panel2);
+  border: 1px solid var(--border-hi);
+  color: var(--bone);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 2px;
+  padding: 6px 10px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.server-connect-btn:hover { color: var(--brass-bright); border-color: var(--brass-bright); }
+.server-config-hint {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 7px;
+  color: var(--bone-dim);
+  letter-spacing: 1px;
+  opacity: 0.8;
+}
 /* RESPONSIVE */
 @media (min-width: 600px) {
   .container { max-width: 720px; }
@@ -755,6 +794,16 @@ textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 1
 
   </div>
 
+  <div class="section" style="padding-bottom: 14px;">
+    <div class="section-label">COGITATOR LINK &#8212; SERVER URL</div>
+    <div class="server-config-row">
+      <input type="text" id="serverUrlInput" class="server-url-input"
+             placeholder="https://xxxx.ngrok.io  (vide = localhost)">
+      <button id="serverConnectBtn" class="server-connect-btn" onclick="saveServerUrl()">CONNECT</button>
+    </div>
+    <div class="server-config-hint">Tunnel ngrok / Cloudflare ou IP r&#233;seau local &#8212; laisser vide si Flask tourne en local</div>
+  </div>
+
   <div class="footer">
     <div class="footer-quote">"Knowledge is power, guard it well."</div>
   </div>
@@ -766,6 +815,7 @@ textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 1
   let currentLang    = 'fr';
   let USE_MOCK       = false;
   let currentCustomPrompt = '';
+  let SERVER_URL = (localStorage.getItem('mechanicus_server_url') || '').replace(/\/$/, '');
 
   const MOCK = {
     tech_priest: {
@@ -895,7 +945,7 @@ textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 1
 
   async function _transmuteReal(input, enEl, frEl, msgInterval, overlay, outputSection) {
     try {
-      const resp = await fetch('/translate', {
+      const resp = await fetch(SERVER_URL + '/translate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: input, persona: currentPersona, mode: currentMode, input_lang: currentLang, custom_prompt: currentCustomPrompt }),
@@ -957,16 +1007,21 @@ textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 1
     } catch {}
   }
 
-  window.addEventListener('DOMContentLoaded', async () => {
-    const dot  = document.getElementById('statusDot');
-    const text = document.getElementById('statusText');
+  async function checkStatus() {
+    const dot    = document.getElementById('statusDot');
+    const text   = document.getElementById('statusText');
+    const banner = document.getElementById('disconnectedBanner');
     try {
-      const r = await fetch('/status');
+      const r = await fetch(SERVER_URL + '/status');
       const d = await r.json();
+      USE_MOCK = false;
+      banner.classList.remove('visible');
       if (d.ok) {
-        text.textContent = 'MISTRAL 7B — OMNISSIAH APPROVED';
+        text.textContent     = 'MISTRAL 7B — OMNISSIAH APPROVED';
+        dot.style.background = 'var(--green-bright)';
+        dot.style.boxShadow  = '0 0 5px var(--green-bright)';
       } else {
-        text.textContent = 'MODEL NOT LOADED — CHECK OLLAMA';
+        text.textContent     = 'MODEL NOT LOADED — CHECK OLLAMA';
         dot.style.background = 'var(--blood-bright)';
         dot.style.boxShadow  = '0 0 6px var(--blood-bright)';
       }
@@ -975,8 +1030,28 @@ textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 1
       text.textContent     = 'COGITATOR LINK SEVERED — DISCONNECTED MODE';
       dot.style.background = 'var(--brass-bright)';
       dot.style.boxShadow  = '0 0 6px var(--brass-bright)';
-      document.getElementById('disconnectedBanner').classList.add('visible');
+      banner.classList.add('visible');
     }
+  }
+
+  async function saveServerUrl() {
+    const input = document.getElementById('serverUrlInput');
+    const btn   = document.getElementById('serverConnectBtn');
+    SERVER_URL = input.value.trim().replace(/\/$/, '');
+    localStorage.setItem('mechanicus_server_url', SERVER_URL);
+    btn.textContent = 'CONNECTING...';
+    btn.disabled = true;
+    await checkStatus();
+    const ok = !USE_MOCK;
+    btn.textContent  = ok ? '[ LINK ACTIVE ]' : '[ LINK FAILED ]';
+    btn.style.color  = ok ? 'var(--green-bright)' : 'var(--blood-bright)';
+    setTimeout(() => { btn.textContent = 'CONNECT'; btn.style.color = ''; btn.disabled = false; }, 2000);
+  }
+
+  window.addEventListener('DOMContentLoaded', async () => {
+    const input = document.getElementById('serverUrlInput');
+    if (input && SERVER_URL) input.value = SERVER_URL;
+    await checkStatus();
   });
 
   setInterval(() => {
