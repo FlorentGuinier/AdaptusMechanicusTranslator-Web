@@ -692,6 +692,11 @@ textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 1
       <div class="status-dot" id="statusDot"></div>
       <span class="status-text" id="statusText">COGITATOR LINK ESTABLISHING...</span>
     </div>
+    <div class="server-config-row" style="margin-top:10px;padding:0 12px;">
+      <input type="text" id="serverUrlInput" class="server-url-input"
+             placeholder="https://xxxx.trycloudflare.com  (vide = localhost)">
+      <button id="serverConnectBtn" class="server-connect-btn" onclick="saveServerUrl()">CONNECT</button>
+    </div>
   </div>
 
   <div class="disconnected-banner" id="disconnectedBanner">
@@ -794,17 +799,7 @@ textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 1
 
   </div>
 
-  <div class="section" style="padding-bottom: 14px;">
-    <div class="section-label">COGITATOR LINK &#8212; SERVER URL</div>
-    <div class="server-config-row">
-      <input type="text" id="serverUrlInput" class="server-url-input"
-             placeholder="https://xxxx.trycloudflare.com  (vide = localhost)">
-      <button id="serverConnectBtn" class="server-connect-btn" onclick="saveServerUrl()">CONNECT</button>
-    </div>
-    <div class="server-config-hint">URL Cloudflare Tunnel ou IP r&#233;seau local &#8212; laisser vide si Flask tourne en local</div>
-  </div>
-
-  <div class="footer">
+<div class="footer">
     <div class="footer-quote">"Knowledge is power, guard it well."</div>
   </div>
 
@@ -1035,7 +1030,7 @@ Return ONLY the reformulated text, no introduction or explanation.`;
       USE_MOCK = false;
       banner.classList.remove('visible');
       if (d.ok) {
-        text.textContent     = 'MISTRAL 7B — OMNISSIAH APPROVED';
+        text.textContent     = 'OMNISSIAH APPROVED — MODEL READY';
         dot.style.background = 'var(--green-bright)';
         dot.style.boxShadow  = '0 0 5px var(--green-bright)';
       } else {
