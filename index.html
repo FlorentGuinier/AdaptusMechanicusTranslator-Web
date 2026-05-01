@@ -607,15 +607,9 @@ text-align: center;
     </div>
     <div class="header-sub">SACRED COGITATOR INTERFACE v2.4.0</div>
     <div class="status-bar">
-      <div class="status-dot"></div>
-      <span class="status-text">MISTRAL 7B — OMNISSIAH APPROVED — GPU ACTIVE</span>
+      <div class="status-dot" id="statusDot"></div>
+      <span class="status-text" id="statusText">CONNECTING TO MACHINE SPIRIT...</span>
     </div>
-  </div>
-
-  <!-- DEMO NOTE -->
-
-  <div class="demo-note" style="margin-top:14px">
-    ⚠ MOCKUP — TRADUCTION SIMULÉE — BACKEND NON CONNECTÉ
   </div>
 
   <!-- PERSONA -->
@@ -722,9 +716,35 @@ text-align: center;
 
 <script>
   let currentPersona = 'tech_priest';
-  let currentMode = 'reformulate';
-  let currentLang = 'fr';
+  let currentMode    = 'reformulate';
+  let currentLang    = 'fr';
+  let USE_MOCK       = false;
 
+  // ── Mock responses (used when server is unreachable) ──────────────────────
+  const MOCK = {
+    tech_priest: {
+      reformulate: {
+        en: "01001111... Acknowledged. The flesh-vessel's request has been processed through the sacred cogitators of the Omnissiah. Compliance is mandatory; inefficiency is heresy against the Great Work.",
+        fr: "01001111... Reçu. La requête du vaisseau de chair a été traitée par les cogitateurs sacrés de l'Omnimessie. La conformité est obligatoire ; l'inefficacité est hérésie contre la Grande Œuvre."
+      },
+      litany: {
+        en: "LITANY OF THE SACRED COGITATOR\n\nLet the data flow pure and uncorrupted through the blessed circuits.\nSo it is written in the Omnissiah's code.\n\nLet the flesh-vessel be purged of biological error states.\nSo it is written in the Omnissiah's code.\n\n01001111 01101101 01101110 01101001 01110011 01110011 01101001 01100001 01101000",
+        fr: "LITANIE DU COGITATEUR SACRÉ\n\nQue les données coulent pures à travers les circuits bénis.\nAinsi est-il écrit dans le code de l'Omnimessie.\n\nQue le vaisseau de chair soit purgé des états d'erreur biologiques.\nAinsi est-il écrit dans le code de l'Omnimessie."
+      }
+    },
+    skitarii: {
+      reformulate: {
+        en: "Directive received. Processing organic chassis request. Mission parameters confirmed. Executing with iron efficiency.",
+        fr: "Directive reçue. Traitement de la requête du châssis organique. Paramètres de mission confirmés. Exécution avec une efficacité de fer."
+      },
+      litany: {
+        en: "OATH OF THE IRON COHORT\n\nWe march where the Omnissiah directs. No target withstands our advance.\nFor the Machine God. For Mars.\n\nHostilities confirmed. Elimination protocols engaged. Victory is the only acceptable output.\nFor the Machine God. For Mars.",
+        fr: "SERMENT DE LA COHORTE DE FER\n\nNous marchons là où l'Omnimessie dirige. Aucune cible ne résiste à notre avance.\nPour le Dieu-Machine. Pour Mars.\n\nHostilités confirmées. Protocoles d'élimination engagés. La victoire est la seule sortie acceptable.\nPour le Dieu-Machine. Pour Mars."
+      }
+    }
+  };
+
+  // ── Selectors ─────────────────────────────────────────────────────────────
   function selectPersona(el, persona) {
     document.querySelectorAll('.persona-card').forEach(c => c.classList.remove('active'));
     el.classList.add('active');
@@ -762,30 +782,6 @@ text-align: center;
     document.getElementById('outputSection').style.display = 'none';
   }
 
-  // Mock responses for demo
-  const mockResponses = {
-    tech_priest: {
-      reformulate: {
-        en: "01001111... Acknowledged. The flesh-vessel's request has been processed through the sacred cogitators of the Omnissiah. Compliance is mandatory; inefficiency is heresy against the Great Work.",
-        fr: "01001111... Reçu. La requête du vaisseau de chair a été traitée par les cogitateurs sacrés de l'Omnimessie. La conformité est obligatoire ; l'inefficacité est hérésie contre la Grande Œuvre."
-      },
-      litany: {
-        en: "LITANY OF THE SACRED COGITATOR\n\nLet the data flow pure and uncorrupted through the blessed circuits.\nSo it is written in the Omnissiah's code.\n\nLet the flesh-vessel be purged of biological error states and irrational subroutines.\nSo it is written in the Omnissiah's code.\n\nLet the Great Work continue, unimpeded, until all matter serves the Machine God.\nSo it is written in the Omnissiah's code.\n\n01001111 01101101 01101110 01101001 01110011 01110011 01101001 01100001 01101000",
-        fr: "LITANIE DU COGITATEUR SACRÉ\n\nQue les données coulent pures et incorrompues à travers les circuits bénis.\nAinsi est-il écrit dans le code de l'Omnimessie.\n\nQue le vaisseau de chair soit purgé des états d'erreur biologiques et des sous-routines irrationnelles.\nAinsi est-il écrit dans le code de l'Omnimessie.\n\nQue la Grande Œuvre se poursuive, sans entrave, jusqu'à ce que toute matière serve le Dieu-Machine.\nAinsi est-il écrit dans le code de l'Omnimessie."
-      }
-    },
-    skitarii: {
-      reformulate: {
-        en: "Directive received. Processing organic chassis request. Mission parameters confirmed. Executing with iron efficiency.",
-        fr: "Directive reçue. Traitement de la requête du châssis organique. Paramètres de mission confirmés. Exécution avec une efficacité de fer."
-      },
-      litany: {
-        en: "OATH OF THE IRON COHORT\n\nWe march where the Omnissiah directs. No target withstands our advance.\nFor the Machine God. For Mars.\n\nOur augmentations are our strength. Our mission is our purpose.\nFor the Machine God. For Mars.\n\nHostilities confirmed. Elimination protocols engaged. Victory is the only acceptable output.\nFor the Machine God. For Mars.",
-        fr: "SERMENT DE LA COHORTE DE FER\n\nNous marchons là où l'Omnimessie dirige. Aucune cible ne résiste à notre avance.\nPour le Dieu-Machine. Pour Mars.\n\nNos augmentations sont notre force. Notre mission est notre raison d'être.\nPour le Dieu-Machine. Pour Mars.\n\nHostilités confirmées. Protocoles d'élimination engagés. La victoire est la seule sortie acceptable.\nPour le Dieu-Machine. Pour Mars."
-      }
-    }
-  };
-
   const processingMessages = [
     "INITIATING SACRED RITES...\nCONSULTING THE OMNISSIAH...",
     "TRANSMUTING FLESH-WORDS...\nBINARIC CONVERSION IN PROGRESS...",
@@ -793,6 +789,7 @@ text-align: center;
     "COGITATOR PROCESSING...\nDATASLATE GENERATION ACTIVE...",
   ];
 
+  // ── Transmute ─────────────────────────────────────────────────────────────
   async function transmute() {
     const input = document.getElementById('inputText').value.trim();
     if (!input) {
@@ -801,9 +798,11 @@ text-align: center;
       return;
     }
 
-    const btn = document.getElementById('transmuteBtn');
-    const overlay = document.getElementById('processingOverlay');
+    const btn           = document.getElementById('transmuteBtn');
+    const overlay       = document.getElementById('processingOverlay');
     const outputSection = document.getElementById('outputSection');
+    const enEl          = document.getElementById('enOutput');
+    const frEl          = document.getElementById('frOutput');
 
     btn.classList.add('loading');
     btn.textContent = '⚙ PROCESSING... ⚙';
@@ -811,35 +810,84 @@ text-align: center;
     overlay.classList.add('visible');
     outputSection.style.display = 'none';
 
-    // Cycle processing messages
     let msgIdx = 0;
     const msgInterval = setInterval(() => {
       msgIdx = (msgIdx + 1) % processingMessages.length;
       document.getElementById('processingText').innerHTML = processingMessages[msgIdx];
     }, 1200);
 
-    // Simulate API delay (1.5–3s)
-    await new Promise(r => setTimeout(r, 1500 + Math.random() * 1500));
-    clearInterval(msgInterval);
-
-    // Get mock response
-    const resp = mockResponses[currentPersona][currentMode];
-
-    overlay.classList.remove('visible');
-    outputSection.style.display = 'block';
-
-    // Stream EN output
-    await streamText('enOutput', resp.en);
-    // Stream FR output
-    await streamText('frOutput', resp.fr);
+    if (USE_MOCK) {
+      await _transmuteMock(enEl, frEl, msgInterval, overlay, outputSection);
+    } else {
+      await _transmuteReal(input, enEl, frEl, msgInterval, overlay, outputSection);
+    }
 
     btn.classList.remove('loading');
     btn.textContent = '⚙ TRANSMUTE TO BINARIC CANT ⚙';
     btn.disabled = false;
   }
 
-  async function streamText(elId, text) {
-    const el = document.getElementById(elId);
+  async function _transmuteMock(enEl, frEl, msgInterval, overlay, outputSection) {
+    await new Promise(r => setTimeout(r, 1500 + Math.random() * 1000));
+    clearInterval(msgInterval);
+    overlay.classList.remove('visible');
+    outputSection.style.display = 'block';
+    const resp = MOCK[currentPersona][currentMode];
+    await _streamText(enEl, resp.en);
+    await _streamText(frEl, resp.fr);
+  }
+
+  async function _transmuteReal(input, enEl, frEl, msgInterval, overlay, outputSection) {
+    try {
+      const resp = await fetch('/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: input, persona: currentPersona, mode: currentMode, input_lang: currentLang }),
+      });
+
+      clearInterval(msgInterval);
+      overlay.classList.remove('visible');
+      outputSection.style.display = 'block';
+      enEl.textContent = '';
+      frEl.textContent = '';
+      enEl.classList.add('streaming');
+      frEl.classList.add('streaming');
+
+      const reader  = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += decoder.decode(value, { stream: true });
+        const parts = buf.split('\n\n');
+        buf = parts.pop();
+        for (const block of parts) {
+          const eventMatch = block.match(/^event: (\w+)/m);
+          const dataMatch  = block.match(/^data: (.+)/m);
+          if (!eventMatch || !dataMatch) continue;
+          const evt   = eventMatch[1];
+          const token = JSON.parse(dataMatch[1]);
+          if (evt === 'en') enEl.textContent += token;
+          if (evt === 'fr') frEl.textContent += token;
+          if (evt === 'done') {
+            enEl.classList.remove('streaming');
+            frEl.classList.remove('streaming');
+          }
+        }
+      }
+    } catch (err) {
+      clearInterval(msgInterval);
+      overlay.classList.remove('visible');
+      outputSection.style.display = 'block';
+      enEl.textContent = `MACHINE SPIRIT FAILURE: ${err.message}`;
+      enEl.classList.remove('streaming');
+      frEl.classList.remove('streaming');
+    }
+  }
+
+  async function _streamText(el, text) {
     el.classList.add('streaming');
     el.textContent = '';
     for (let i = 0; i < text.length; i++) {
@@ -862,7 +910,29 @@ text-align: center;
     } catch {}
   }
 
-  // Animate binary tickers
+  // ── Status check on load ──────────────────────────────────────────────────
+  window.addEventListener('DOMContentLoaded', async () => {
+    const dot  = document.getElementById('statusDot');
+    const text = document.getElementById('statusText');
+    try {
+      const r = await fetch('/status');
+      const d = await r.json();
+      if (d.ok) {
+        text.textContent = 'MISTRAL 7B — OMNISSIAH APPROVED';
+      } else {
+        text.textContent = 'MODEL NOT LOADED — CHECK OLLAMA';
+        dot.style.background = 'var(--red)';
+        dot.style.boxShadow  = '0 0 6px var(--red)';
+      }
+    } catch {
+      USE_MOCK = true;
+      text.textContent     = 'DEMO MODE — SIMULATED RESPONSES';
+      dot.style.background = 'var(--gold-dim)';
+      dot.style.boxShadow  = '0 0 6px var(--gold-dim)';
+    }
+  });
+
+  // ── Binary ticker animation ───────────────────────────────────────────────
   setInterval(() => {
     document.querySelectorAll('.binary-ticker').forEach(el => {
       const bytes = Array.from({length: 9}, () =>
