@@ -262,6 +262,27 @@ body::after {
 }
 .persona-card.active .persona-desc { color: var(--bone); }
 .persona-card-wide { grid-column: 1 / -1; }
+/* CUSTOMIZE BUTTON */
+.persona-customize-btn {
+  display: block;
+  width: calc(100% + 16px);
+  margin: 10px -8px -12px;
+  padding: 5px 0;
+  background: rgba(0,0,0,0.25);
+  border: none;
+  border-top: 1px solid var(--border);
+  color: var(--bone-dim);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.15s;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.persona-customize-btn:hover { color: var(--brass-bright); background: rgba(74,48,16,0.25); }
 /* CUSTOM PROMPT */
 .custom-prompt-panel { display: none; margin-bottom: 14px; }
 .custom-prompt-panel.visible { display: block; }
@@ -714,6 +735,7 @@ textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 1
         <span class="persona-glyph">&#9881;</span>
         <span class="persona-name">TECH-PRIEST</span>
         <span class="persona-desc">MAGOS DOMINUS<br>RITE OF PURE THOUGHT</span>
+        <button class="persona-customize-btn" onclick="event.stopPropagation(); customizePersona('tech_priest')">&#9660; CUSTOMIZE</button>
       </div>
 
       <div class="persona-card" onclick="selectPersona(this, 'skitarii')">
@@ -722,6 +744,7 @@ textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 1
         <span class="persona-glyph">&#10012;</span>
         <span class="persona-name">SKITARII</span>
         <span class="persona-desc">VEX-COHORT VANGUARD<br>COMBAT PROTOCOLS</span>
+        <button class="persona-customize-btn" onclick="event.stopPropagation(); customizePersona('skitarii')">&#9660; CUSTOMIZE</button>
       </div>
 
       <div class="persona-card persona-card-wide" onclick="selectPersona(this, 'custom')">
@@ -730,6 +753,7 @@ textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 1
         <span class="persona-glyph" style="font-size:22px">&#9672;</span>
         <span class="persona-name">USER-DEFINED</span>
         <span class="persona-desc">CUSTOM SYSTEM PROMPT &#8212; DEFINE PERSONA PARAMETERS</span>
+        <button class="persona-customize-btn" onclick="event.stopPropagation(); resetCustomPrompt()">&#8635; RESET TO TEMPLATE</button>
       </div>
 
     </div>
@@ -805,6 +829,7 @@ textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 1
 
 </div>
 <script>
+  let cachedPrompts  = null;
   let currentPersona = 'tech_priest';
   let currentMode    = 'reformulate';
   let currentLang    = 'fr';
@@ -848,6 +873,24 @@ Return ONLY the reformulated text, no introduction or explanation.`;
       }
     }
   };
+
+  async function customizePersona(persona) {
+    if (!cachedPrompts) {
+      try { cachedPrompts = await (await fetch(SERVER_URL + '/prompts')).json(); }
+      catch { return; }
+    }
+    const prompt = cachedPrompts[persona]?.[currentMode] ?? '';
+    if (!prompt) return;
+    document.getElementById('customPromptInput').value = prompt;
+    const customCard = document.querySelector('.persona-card-wide');
+    selectPersona(customCard, 'custom');
+  }
+
+  function resetCustomPrompt() {
+    document.getElementById('customPromptInput').value = DEFAULT_CUSTOM_PROMPT;
+    const customCard = document.querySelector('.persona-card-wide');
+    selectPersona(customCard, 'custom');
+  }
 
   function selectPersona(el, persona) {
     document.querySelectorAll('.persona-card').forEach(c => c.classList.remove('active'));
@@ -1053,6 +1096,7 @@ Return ONLY the reformulated text, no introduction or explanation.`;
     const btn   = document.getElementById('serverConnectBtn');
     SERVER_URL = input.value.trim().replace(/\/$/, '');
     localStorage.setItem('mechanicus_server_url', SERVER_URL);
+    cachedPrompts = null;
     btn.textContent = 'CONNECTING...';
     btn.disabled = true;
     await checkStatus();
