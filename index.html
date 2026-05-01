@@ -731,7 +731,7 @@ textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 1
 
     <div class="custom-prompt-panel" id="customPromptPanel">
       <div class="custom-prompt-label">&#9656; DEFINE PERSONA SYSTEM PROMPT</div>
-      <textarea id="customPromptInput" placeholder="Input persona definition. This text becomes the system prompt transmitted to the cogitator model."></textarea>
+      <textarea id="customPromptInput" placeholder="Persona system prompt — edit the template above or write your own."></textarea>
     </div>
 
     <div class="section-label">OUTPUT MODE</div>
@@ -817,6 +817,20 @@ textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 1
   let currentCustomPrompt = '';
   let SERVER_URL = (localStorage.getItem('mechanicus_server_url') || '').replace(/\/$/, '');
 
+  const DEFAULT_CUSTOM_PROMPT =
+`You are a [DEFINE PERSONA] in the Warhammer 40,000 universe.
+Reformulate any received text in the style of [YOUR PERSONA], in ENGLISH.
+
+CRITICAL RULE — MEANING: Preserve the exact meaning and subject of the input. Only change the wording and style, never the action or topic.
+
+Style rules:
+- [Define tone and voice]
+- [Define vocabulary substitutions, e.g. "human body = organic chassis"]
+- [Define any recurring phrases or interjections]
+
+IMPORTANT: Be CONCISE — one or two sentences maximum, similar in length to the input.
+Return ONLY the reformulated text, no introduction or explanation.`;
+
   const MOCK = {
     tech_priest: {
       reformulate: {
@@ -845,6 +859,10 @@ textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 1
     el.classList.add('active');
     currentPersona = persona;
     document.getElementById('customPromptPanel').classList.toggle('visible', persona === 'custom');
+    if (persona === 'custom') {
+      const ta = document.getElementById('customPromptInput');
+      if (!ta.value.trim()) ta.value = DEFAULT_CUSTOM_PROMPT;
+    }
   }
 
   function selectMode(el, mode) {
