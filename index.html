@@ -1,731 +1,777 @@
 <!DOCTYPE html>
-
-<html lang="en" style="background:#060504 !important">
+<html lang="en" style="background:#0d0b07 !important">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#060504">
-<title>⚙ MECHANICUS LINGUA TRANSLATOR ⚙</title>
+<meta name="theme-color" content="#0d0b07">
+<title>&#9881; MECHANICUS LINGUA CODEX &#9881;</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cinzel:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --red: #c0392b;
-    --red-bright: #e74c3c;
-    --red-dim: #7b1a10;
-    --gold: #c9a84c;
-    --gold-bright: #f0c060;
-    --gold-dim: #6b5520;
-    --dark: #0a0807;
-    --darker: #060504;
-    --panel: #110e0c;
-    --panel2: #1a1410;
-    --text: #d4b896;
-    --text-dim: #7a6048;
-    --text-bright: #f0d8b0;
-    --green: #4a9a5a;
-    --green-dim: #1a3a20;
-    --border: #3a2810;
-    --scan: rgba(192, 57, 43, 0.03);
-  }
-
-html {
-background: #060504;
-color-scheme: dark;
+:root {
+  --blood:        #8e1812;
+  --blood-bright: #c83020;
+  --blood-dim:    #5a0e08;
+  --brass:        #6a4a18;
+  --brass-bright: #c09432;
+  --brass-dim:    #3a2a0a;
+  --panel:        #261e0c;
+  --panel2:       #322810;
+  --bone:         #d8b888;
+  --bone-dim:     #b08c52;
+  --bone-bright:  #e8c898;
+  --green:        #1e4e1c;
+  --green-bright: #52a044;
+  --border:       #3e2c16;
+  --border-hi:    #624020;
+  --scan: rgba(139,20,8,0.04);
 }
-
-- { box-sizing: border-box; margin: 0; padding: 0; }
-
+html { background: #0d0b07; color-scheme: dark; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-background: #060504 !important;
-color: var(–text);
-font-family: ‘Rajdhani’, sans-serif;
-min-height: 100vh;
-overflow-x: hidden;
-position: relative;
+  background: #0d0b07 !important;
+  color: var(--bone);
+  font-family: 'Rajdhani', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
 }
-
-/* Scanlines overlay */
 body::before {
-content: ‘’;
-position: fixed;
-inset: 0;
-background: repeating-linear-gradient(
-0deg,
-var(–scan) 0px,
-var(–scan) 1px,
-transparent 1px,
-transparent 3px
-);
-pointer-events: none;
-z-index: 1000;
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg, var(--scan) 0px, var(--scan) 1px, transparent 1px, transparent 3px);
+  pointer-events: none;
+  z-index: 1000;
 }
-
-/* Vignette */
 body::after {
-content: ‘’;
-position: fixed;
-inset: 0;
-background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.7) 100%);
-pointer-events: none;
-z-index: 999;
+  content: '';
+  position: fixed; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.60) 100%);
+  pointer-events: none;
+  z-index: 999;
 }
-
-/* Ambient glow */
 .ambient {
-position: fixed;
-top: -200px;
-left: 50%;
-transform: translateX(-50%);
-width: 400px;
-height: 400px;
-background: radial-gradient(circle, rgba(192,57,43,0.08) 0%, transparent 70%);
-pointer-events: none;
-z-index: 0;
+  position: fixed;
+  top: -150px; left: 50%;
+  transform: translateX(-50%);
+  width: 700px; height: 500px;
+  background: radial-gradient(circle, rgba(158,28,10,0.22) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
 }
-
 .container {
-max-width: 480px;
-margin: 0 auto;
-padding: 0 0 80px 0;
-position: relative;
-z-index: 1;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0 0 80px 0;
+  position: relative;
+  z-index: 1;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
 }
-
-/* ═══ HEADER ═══ */
+/* HEADER */
 .header {
-text-align: center;
-padding: 20px 16px 12px;
-border-bottom: 1px solid var(–red-dim);
-position: relative;
-background: linear-gradient(180deg, rgba(192,57,43,0.05) 0%, transparent 100%);
+  text-align: center;
+  padding: 20px 16px 14px;
+  border-bottom: 1px solid var(--blood-dim);
+  position: relative;
+  background: linear-gradient(180deg, rgba(139,20,8,0.12) 0%, transparent 100%);
 }
-
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--blood);
+  box-shadow: 0 0 14px var(--blood), 0 0 28px rgba(139,20,8,0.4);
+}
 .header-cog-row {
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 12px;
-margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 8px;
 }
-
 .cog-icon {
-font-size: 22px;
-display: inline-block;
-animation: rotate 12s linear infinite;
-color: var(–red);
-filter: drop-shadow(0 0 6px var(–red));
+  font-size: 18px;
+  display: inline-block;
+  animation: rotate 12s linear infinite;
+  color: var(--blood);
+  filter: drop-shadow(0 0 5px var(--blood));
 }
-.cog-icon.reverse { animation-direction: reverse; animation-duration: 8s; }
-
+.cog-icon.reverse { animation-direction: reverse; animation-duration: 9s; }
 @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
 .header h1 {
-font-family: ‘Cinzel’, serif;
-font-size: 13px;
-font-weight: 900;
-letter-spacing: 4px;
-color: var(–gold-bright);
-text-transform: uppercase;
-text-shadow: 0 0 20px rgba(201,168,76,0.6);
-line-height: 1.3;
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 5px;
+  color: var(--bone-bright);
+  text-transform: uppercase;
+  text-shadow: 0 0 30px rgba(139,20,8,0.8), 0 1px 0 #000;
+  line-height: 1.4;
 }
-
 .header-sub {
-font-family: ‘Share Tech Mono’, monospace;
-font-size: 9px;
-color: var(–red);
-letter-spacing: 2px;
-margin-top: 4px;
-opacity: 0.8;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  color: var(--blood-bright);
+  letter-spacing: 3px;
+  margin-top: 6px;
+  opacity: 0.75;
 }
-
+.am-icon-wrap { display: flex; justify-content: center; margin-bottom: 10px; }
+.am-icon {
+  width: 68px; height: 68px;
+  filter: drop-shadow(0 0 8px rgba(139,20,8,0.55)) drop-shadow(0 0 18px rgba(139,20,8,0.28));
+}
 .status-bar {
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 8px;
-margin-top: 10px;
-padding: 4px 12px;
-background: var(–green-dim);
-border: 1px solid var(–green);
-border-radius: 2px;
-width: fit-content;
-margin-left: auto;
-margin-right: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 5px 12px;
+  background: var(--green);
+  border: 1px solid var(--green-bright);
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
-
 .status-dot {
-width: 6px;
-height: 6px;
-border-radius: 50%;
-background: var(–green);
-box-shadow: 0 0 6px var(–green);
-animation: pulse 2s ease-in-out infinite;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--green-bright);
+  box-shadow: 0 0 5px var(--green-bright);
+  animation: pulse 2s ease-in-out infinite;
 }
-@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
-
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 .status-text {
-font-family: ‘Share Tech Mono’, monospace;
-font-size: 9px;
-color: var(–green);
-letter-spacing: 1px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  color: var(--green-bright);
+  letter-spacing: 2px;
 }
-
-/* ═══ SECTION ═══ */
-.section {
-padding: 14px 14px 0;
-}
-
+/* SECTION */
+.section { padding: 14px 14px 0; }
 .section-label {
-font-family: ‘Share Tech Mono’, monospace;
-font-size: 9px;
-color: var(–red);
-letter-spacing: 3px;
-text-transform: uppercase;
-margin-bottom: 8px;
-display: flex;
-align-items: center;
-gap: 8px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  color: var(--blood-bright);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+.section-label::before { content: '\25b8'; color: var(--blood); font-size: 10px; }
 .section-label::after {
-content: ‘’;
-flex: 1;
-height: 1px;
-background: linear-gradient(90deg, var(–red-dim), transparent);
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--blood-dim), transparent);
 }
-
-/* ═══ PERSONA SELECTOR ═══ */
+/* PERSONA CARDS */
 .persona-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 8px;
-margin-bottom: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 14px;
 }
-
 .persona-card {
-background: var(–panel);
-border: 1px solid var(–border);
-border-radius: 3px;
-padding: 10px 8px;
-text-align: center;
-cursor: pointer;
-transition: all 0.2s;
-position: relative;
-overflow: hidden;
+  background:
+    repeating-linear-gradient(-45deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 4px),
+    linear-gradient(160deg, #2e2610 0%, #221c0a 100%);
+  border: 1px solid var(--border);
+  padding: 12px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+  overflow: hidden;
 }
-
-.persona-card::before {
-content: ‘’;
-position: absolute;
-inset: 0;
-background: linear-gradient(135deg, rgba(192,57,43,0.08) 0%, transparent 60%);
-opacity: 0;
-transition: opacity 0.2s;
+.persona-card::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(139,20,8,0.1) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.15s;
 }
-
 .persona-card.active {
-border-color: var(–red);
-background: rgba(192,57,43,0.12);
-box-shadow: 0 0 16px rgba(192,57,43,0.2), inset 0 0 10px rgba(192,57,43,0.05);
+  border: 2px solid var(--blood-bright);
+  background:
+    repeating-linear-gradient(-45deg, rgba(139,20,8,0.12) 0px, rgba(139,20,8,0.12) 1px, transparent 1px, transparent 4px),
+    linear-gradient(160deg, #220c08 0%, #180804 100%);
+  box-shadow: 0 0 22px rgba(139,20,8,0.5), inset 0 0 20px rgba(139,20,8,0.08);
 }
-.persona-card.active::before { opacity: 1; }
-
-.persona-icon { font-size: 24px; margin-bottom: 4px; display: block; }
-
+.persona-card.active::after { opacity: 1; }
+.persona-card:hover:not(.active) {
+  border-color: var(--border-hi);
+  background:
+    repeating-linear-gradient(-45deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 4px),
+    linear-gradient(160deg, #342c12 0%, #28220e 100%);
+}
+.persona-card:hover:not(.active)::after { opacity: 0.4; }
+/* Rivets */
+.rivet {
+  position: absolute;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #2a2010 30%, #0e0c08 100%);
+  border: 1px solid var(--border-hi);
+}
+.rivet.tl { top: 3px; left: 3px; }
+.rivet.tr { top: 3px; right: 3px; }
+.rivet.bl { bottom: 3px; left: 3px; }
+.rivet.br { bottom: 3px; right: 3px; }
+.persona-glyph {
+  font-size: 28px;
+  margin-bottom: 6px;
+  display: block;
+  color: var(--brass-bright);
+  opacity: 0.85;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.95));
+  transition: transform 0.15s, opacity 0.15s, color 0.15s, filter 0.15s;
+  line-height: 1;
+}
 .persona-name {
-font-family: ‘Cinzel’, serif;
-font-size: 10px;
-font-weight: 700;
-color: var(–gold);
-letter-spacing: 1px;
-display: block;
-margin-bottom: 2px;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--brass-bright);
+  letter-spacing: 2px;
+  display: block;
+  margin-bottom: 3px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.95);
 }
-.persona-card.active .persona-name { color: var(–gold-bright); }
-
 .persona-desc {
-font-size: 9px;
-color: var(–text-dim);
-letter-spacing: 0.5px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  color: var(--bone-dim);
+  letter-spacing: 0.3px;
+  line-height: 1.5;
 }
-
-/* ═══ MODE SELECTOR ═══ */
-.mode-row {
-display: flex;
-gap: 6px;
-margin-bottom: 14px;
+.persona-card.active .persona-glyph {
+  opacity: 1;
+  color: var(--blood-bright);
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 6px rgba(139,20,8,0.7));
 }
-
+.persona-card.active .persona-name {
+  color: var(--bone-bright);
+  text-shadow: 0 0 6px rgba(139,20,8,0.5), 0 1px 3px rgba(0,0,0,0.95);
+}
+.persona-card.active .persona-desc { color: var(--bone); }
+.persona-card-wide { grid-column: 1 / -1; }
+/* CUSTOM PROMPT */
+.custom-prompt-panel { display: none; margin-bottom: 14px; }
+.custom-prompt-panel.visible { display: block; }
+.custom-prompt-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  color: var(--brass-bright);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.custom-prompt-panel textarea {
+  width: 100%;
+  background:
+    repeating-linear-gradient(-45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 4px),
+    var(--panel);
+  border: 1px solid var(--brass-dim);
+  color: var(--bone-bright);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 10px;
+  resize: vertical;
+  min-height: 110px;
+  outline: none;
+  caret-color: var(--blood-bright);
+}
+.custom-prompt-panel textarea:focus { border-color: var(--brass-bright); }
+.custom-prompt-panel textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 11px; }
+/* MODE */
+.mode-row { display: flex; gap: 4px; margin-bottom: 14px; }
 .mode-btn {
-flex: 1;
-padding: 8px 4px;
-background: var(–panel);
-border: 1px solid var(–border);
-border-radius: 2px;
-color: var(–text-dim);
-font-family: ‘Share Tech Mono’, monospace;
-font-size: 10px;
-letter-spacing: 1px;
-cursor: pointer;
-transition: all 0.2s;
-text-align: center;
+  flex: 1;
+  padding: 8px 4px;
+  background:
+    repeating-linear-gradient(-45deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 4px),
+    var(--panel);
+  border: 1px solid var(--border);
+  color: var(--bone);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+  text-transform: uppercase;
 }
-
 .mode-btn.active {
-border-color: var(–gold-dim);
-color: var(–gold);
-background: rgba(201,168,76,0.06);
+  border: 2px solid var(--blood-bright);
+  color: var(--bone-bright);
+  background: linear-gradient(180deg, #240e08 0%, #180804 100%);
+  box-shadow: 0 0 12px rgba(139,20,8,0.4), inset 0 0 8px rgba(139,20,8,0.1);
+  text-shadow: 0 0 6px rgba(184,28,16,0.5);
 }
-
-/* ═══ LANGUAGE SELECTOR ═══ */
-.lang-row {
-display: flex;
-align-items: center;
-gap: 8px;
-margin-bottom: 14px;
-}
-
+.mode-btn:hover:not(.active) { background: var(--panel2); color: var(--bone); border-color: var(--border-hi); }
+/* LANGUAGE */
+.lang-row { display: flex; align-items: center; gap: 6px; margin-bottom: 14px; }
 .lang-btn {
-flex: 1;
-padding: 8px;
-background: var(–panel);
-border: 1px solid var(–border);
-border-radius: 2px;
-color: var(–text-dim);
-font-family: ‘Share Tech Mono’, monospace;
-font-size: 11px;
-letter-spacing: 1px;
-cursor: pointer;
-transition: all 0.2s;
-text-align: center;
+  flex: 1;
+  padding: 8px;
+  background:
+    repeating-linear-gradient(-45deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 4px),
+    var(--panel);
+  border: 1px solid var(--border);
+  color: var(--bone);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+  text-transform: uppercase;
 }
-
 .lang-btn.active {
-border-color: var(–red-dim);
-color: var(–text);
-background: rgba(192,57,43,0.08);
+  border: 2px solid var(--blood-bright);
+  color: var(--bone-bright);
+  background: linear-gradient(180deg, #240e08 0%, #180804 100%);
+  box-shadow: 0 0 10px rgba(139,20,8,0.35);
 }
-
-.lang-arrow {
-color: var(–red-dim);
-font-size: 16px;
-flex-shrink: 0;
-}
-
-/* ═══ INPUT ═══ */
+.lang-btn:hover:not(.active) { background: var(--panel2); color: var(--bone); border-color: var(--border-hi); }
+.lang-arrow { color: var(--blood-dim); font-size: 12px; flex-shrink: 0; font-family: 'Share Tech Mono', monospace; }
+/* INPUT */
 .input-panel {
-background: var(–panel);
-border: 1px solid var(–border);
-border-radius: 3px;
-overflow: hidden;
-margin-bottom: 10px;
+  background:
+    repeating-linear-gradient(-45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 4px),
+    linear-gradient(160deg, #2a2210 0%, #201a0c 100%);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin-bottom: 10px;
 }
-
 .input-panel:focus-within {
-border-color: var(–red-dim);
-box-shadow: 0 0 12px rgba(192,57,43,0.1);
+  border-color: var(--blood-dim);
+  box-shadow: 0 0 12px rgba(139,20,8,0.15);
 }
-
 .input-header {
-background: rgba(192,57,43,0.06);
-border-bottom: 1px solid var(–border);
-padding: 6px 10px;
-display: flex;
-justify-content: space-between;
-align-items: center;
+  background: rgba(139,20,8,0.14);
+  border-bottom: 1px solid var(--border);
+  padding: 6px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-
 .input-label-text {
-font-family: ‘Share Tech Mono’, monospace;
-font-size: 8px;
-color: var(–red);
-letter-spacing: 2px;
-text-transform: uppercase;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  color: var(--blood-bright);
+  letter-spacing: 2px;
 }
-
-.char-count {
-font-family: ‘Share Tech Mono’, monospace;
-font-size: 8px;
-color: var(–text-dim);
-}
-
+.char-count { font-family: 'Share Tech Mono', monospace; font-size: 8px; color: var(--bone-dim); }
 textarea {
-width: 100%;
-background: transparent;
-border: none;
-outline: none;
-color: var(–text-bright);
-font-family: ‘Rajdhani’, sans-serif;
-font-size: 15px;
-font-weight: 400;
-line-height: 1.5;
-padding: 12px;
-resize: none;
-height: 100px;
-caret-color: var(–red);
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--bone-bright);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  padding: 12px;
+  resize: none;
+  height: 100px;
+  caret-color: var(--blood-bright);
 }
-
-textarea::placeholder { color: var(–text-dim); font-style: italic; font-size: 13px; }
-
-.input-footer {
-padding: 6px 10px;
-border-top: 1px solid var(–border);
-display: flex;
-justify-content: flex-end;
-}
-
+textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 11px; }
+.input-footer { padding: 5px 10px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; }
 .clear-btn {
-font-family: ‘Share Tech Mono’, monospace;
-font-size: 9px;
-color: var(–text-dim);
-cursor: pointer;
-letter-spacing: 1px;
-background: none;
-border: none;
-padding: 0;
-transition: color 0.2s;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  color: var(--bone-dim);
+  cursor: pointer;
+  letter-spacing: 1px;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: color 0.15s;
+  text-transform: uppercase;
 }
-.clear-btn:hover { color: var(–red); }
-
-/* ═══ TRANSMUTE BUTTON ═══ */
+.clear-btn:hover { color: var(--blood-bright); }
+/* TRANSMUTE */
 .transmute-btn {
-width: 100%;
-padding: 14px;
-background: linear-gradient(135deg, #7b1a10, #c0392b);
-border: 1px solid var(–red);
-border-radius: 3px;
-color: #fff;
-font-family: ‘Cinzel’, serif;
-font-size: 13px;
-font-weight: 700;
-letter-spacing: 3px;
-cursor: pointer;
-text-transform: uppercase;
-transition: all 0.2s;
-position: relative;
-overflow: hidden;
-margin-bottom: 14px;
-box-shadow: 0 4px 20px rgba(192,57,43,0.3);
+  width: 100%;
+  padding: 15px;
+  background:
+    repeating-linear-gradient(-45deg, rgba(139,20,8,0.13) 0px, rgba(139,20,8,0.13) 4px, rgba(0,0,0,0.08) 4px, rgba(0,0,0,0.08) 8px),
+    linear-gradient(180deg, #240e08 0%, #1a0604 100%);
+  border: 2px solid var(--blood);
+  border-top-color: var(--blood-bright);
+  color: var(--bone);
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.15s;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 24px rgba(139,20,8,0.35), inset 0 1px 0 rgba(184,28,16,0.2);
 }
-
 .transmute-btn::before {
-content: ‘’;
-position: absolute;
-top: 0; left: -100%;
-width: 100%; height: 100%;
-background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-transition: left 0.4s;
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(139,20,8,0.18), transparent);
+  transition: left 0.5s;
 }
 .transmute-btn:hover::before { left: 100%; }
-.transmute-btn:hover { box-shadow: 0 4px 30px rgba(192,57,43,0.5); }
-.transmute-btn:active { transform: scale(0.98); }
-
+.transmute-btn:hover {
+  border-color: var(--blood-bright);
+  box-shadow: 0 4px 32px rgba(139,20,8,0.55), inset 0 1px 0 rgba(184,28,16,0.3);
+  color: var(--bone-bright);
+  text-shadow: 0 0 10px rgba(139,20,8,0.7);
+}
+.transmute-btn:active { transform: scale(0.99); }
 .transmute-btn.loading {
-background: linear-gradient(135deg, #4a0f08, #7b1a10);
-cursor: wait;
+  background:
+    repeating-linear-gradient(-45deg, rgba(139,20,8,0.08) 0px, rgba(139,20,8,0.08) 4px, transparent 4px, transparent 8px),
+    linear-gradient(180deg, #0e0402 0%, #080302 100%);
+  cursor: wait;
+  opacity: 0.65;
 }
-
-/* ═══ OUTPUT PANELS ═══ */
+/* OUTPUT */
 .output-section { margin-bottom: 14px; }
-
+.output-panels { display: flex; flex-direction: column; gap: 6px; }
+.output-panels .output-panel { margin-bottom: 0; }
 .output-panel {
-background: var(–panel);
-border: 1px solid var(–border);
-border-radius: 3px;
-overflow: hidden;
-margin-bottom: 8px;
+  background:
+    repeating-linear-gradient(-45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 4px),
+    linear-gradient(160deg, #2e2810 0%, #22200c 100%);
+  border: 1px solid var(--border);
+  overflow: hidden;
 }
-
 .output-header {
-background: rgba(201,168,76,0.05);
-border-bottom: 1px solid var(–border);
-padding: 6px 10px;
-display: flex;
-justify-content: space-between;
-align-items: center;
+  background: rgba(90,60,16,0.2);
+  border-bottom: 1px solid var(--border);
+  padding: 5px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-
 .output-lang {
-font-family: ‘Share Tech Mono’, monospace;
-font-size: 8px;
-color: var(–gold-dim);
-letter-spacing: 2px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  color: var(--brass-bright);
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
-
 .copy-btn {
-font-family: ‘Share Tech Mono’, monospace;
-font-size: 9px;
-color: var(–gold-dim);
-cursor: pointer;
-letter-spacing: 1px;
-background: none;
-border: 1px solid var(–gold-dim);
-border-radius: 2px;
-padding: 2px 8px;
-transition: all 0.2s;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  color: var(--bone-dim);
+  cursor: pointer;
+  letter-spacing: 1px;
+  background: none;
+  border: 1px solid var(--border-hi);
+  padding: 2px 8px;
+  transition: all 0.15s;
+  text-transform: uppercase;
 }
-.copy-btn:hover {
-color: var(–gold);
-border-color: var(–gold);
-background: rgba(201,168,76,0.06);
-}
-.copy-btn.copied { color: var(–green); border-color: var(–green); }
-
+.copy-btn:hover { color: var(--brass-bright); border-color: var(--brass-bright); background: rgba(74,48,16,0.15); }
+.copy-btn.copied { color: var(--green-bright); border-color: var(--green-bright); }
 .output-body {
-padding: 12px;
-font-size: 14px;
-line-height: 1.6;
-color: var(–text-bright);
-min-height: 60px;
-font-weight: 300;
+  padding: 12px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--bone);
+  min-height: 60px;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
-
-.output-body.empty {
-color: var(–text-dim);
-font-style: italic;
-font-size: 12px;
-}
-
 .output-body.streaming::after {
-content: ‘▋’;
-animation: blink 0.8s step-end infinite;
-color: var(–red);
+  content: '\2588';
+  animation: blink 0.6s step-end infinite;
+  color: var(--blood-bright);
 }
 @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
-
-/* Binary ticker */
 .binary-ticker {
-font-family: ‘Share Tech Mono’, monospace;
-font-size: 8px;
-color: var(–red-dim);
-letter-spacing: 1px;
-padding: 4px 10px;
-border-top: 1px solid var(–border);
-overflow: hidden;
-white-space: nowrap;
-opacity: 0.5;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 7px;
+  color: var(--blood-dim);
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  border-top: 1px solid var(--border);
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 0.35;
 }
-
-/* ═══ PROCESSING STATE ═══ */
+/* PROCESSING */
 .processing-overlay {
-display: none;
-flex-direction: column;
-align-items: center;
-gap: 10px;
-padding: 24px;
-background: var(–panel);
-border: 1px solid var(–red-dim);
-border-radius: 3px;
-margin-bottom: 14px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 24px;
+  background:
+    repeating-linear-gradient(-45deg, rgba(139,20,8,0.12) 0px, rgba(139,20,8,0.12) 2px, transparent 2px, transparent 6px),
+    var(--panel);
+  border: 1px solid var(--blood-dim);
+  margin-bottom: 14px;
 }
-
 .processing-overlay.visible { display: flex; }
-
 .spinner {
-width: 40px;
-height: 40px;
-border: 2px solid var(–border);
-border-top-color: var(–red);
-border-radius: 50%;
-animation: spin 0.8s linear infinite;
+  width: 36px; height: 36px;
+  border: 2px solid var(--border-hi);
+  border-top-color: var(--blood-bright);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
-
 .processing-text {
-font-family: ‘Share Tech Mono’, monospace;
-font-size: 10px;
-color: var(–red);
-letter-spacing: 2px;
-text-align: center;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--blood-bright);
+  letter-spacing: 2px;
+  text-align: center;
+  text-transform: uppercase;
 }
-
-/* ═══ DIVIDER ═══ */
 .divider {
-height: 1px;
-background: linear-gradient(90deg, transparent, var(–border), transparent);
-margin: 6px 0 14px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-hi), transparent);
+  margin: 6px 0 14px;
 }
-
-/* ═══ FOOTER ═══ */
+/* FOOTER */
 .footer {
-text-align: center;
-padding: 14px;
-border-top: 1px solid var(–border);
-margin-top: 8px;
+  text-align: center;
+  padding: 14px;
+  border-top: 1px solid var(--border);
+  margin-top: 8px;
+  background: linear-gradient(0deg, rgba(139,20,8,0.05) 0%, transparent 100%);
 }
-
+.footer::before {
+  content: '\2699  \2014  \2699';
+  display: block;
+  font-size: 10px;
+  color: var(--blood-dim);
+  margin-bottom: 6px;
+  letter-spacing: 8px;
+}
 .footer-quote {
-font-family: ‘Cinzel’, serif;
-font-size: 9px;
-color: var(–text-dim);
-letter-spacing: 2px;
-font-style: italic;
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  color: var(--bone-dim);
+  letter-spacing: 2px;
+  font-style: italic;
 }
-
-/* ═══ CORNER DECORATIONS ═══ */
-.corner-tl, .corner-tr, .corner-bl, .corner-br {
-position: absolute;
-width: 10px;
-height: 10px;
-border-color: var(–red-dim);
-border-style: solid;
+/* DISCONNECTED */
+.disconnected-banner {
+  display: none;
+  background:
+    repeating-linear-gradient(-45deg, rgba(74,48,16,0.15) 0px, rgba(74,48,16,0.15) 4px, rgba(0,0,0,0.1) 4px, rgba(0,0,0,0.1) 8px);
+  border-top: 2px solid var(--brass);
+  border-bottom: 2px solid var(--brass);
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  color: var(--brass-bright);
+  letter-spacing: 2px;
+  text-align: center;
+  line-height: 2;
+  text-transform: uppercase;
 }
-.corner-tl { top: 0; left: 0; border-width: 1px 0 0 1px; }
-.corner-tr { top: 0; right: 0; border-width: 1px 1px 0 0; }
-.corner-bl { bottom: 0; left: 0; border-width: 0 0 1px 1px; }
-.corner-br { bottom: 0; right: 0; border-width: 0 1px 1px 0; }
-
-/* Demo note */
-.demo-note {
-background: rgba(201,168,76,0.05);
-border: 1px solid var(–gold-dim);
-border-radius: 2px;
-padding: 8px 12px;
-margin: 0 14px 14px;
-font-family: ‘Share Tech Mono’, monospace;
-font-size: 9px;
-color: var(–gold-dim);
-letter-spacing: 1px;
-text-align: center;
+.disconnected-banner.visible { display: block; }
+/* RESPONSIVE */
+@media (min-width: 600px) {
+  .container { max-width: 720px; }
+  .output-panels { flex-direction: row; }
+  .output-panels .output-panel { flex: 1; }
 }
 </style>
-
 </head>
 <body>
 <div class="ambient"></div>
-
 <div class="container">
 
-  <!-- HEADER -->
-
   <div class="header">
-    <div class="header-cog-row">
-      <span class="cog-icon reverse">⚙</span>
-      <h1>MECHANICUS<br>LINGUA TRANSLATOR</h1>
-      <span class="cog-icon">⚙</span>
+    <div class="am-icon-wrap">
+      <svg class="am-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" aria-hidden="true">
+        <defs>
+          <clipPath id="amL"><rect x="0" y="0" width="50" height="100"/></clipPath>
+          <clipPath id="amR"><rect x="50" y="0" width="50" height="100"/></clipPath>
+        </defs>
+        <!-- Gear ring (brass) -->
+        <polygon fill="#a07828" points="50,1 63.8,16.7 84.6,15.4 83.3,36.2 99,50 83.3,63.8 84.6,84.6 63.8,83.3 50,99 36.2,83.3 15.4,84.6 16.7,63.8 1,50 16.7,36.2 15.4,15.4 36.2,16.7"/>
+        <!-- Inner dark circle creating the ring -->
+        <circle cx="50" cy="50" r="36" fill="#1a1408"/>
+        <!-- Left organic half -->
+        <g clip-path="url(#amL)">
+          <path fill="#c8a060" d="M50,21 C29,21 20,34 20,46 C20,58 28,64 36,68 L36,76 L50,76 Z"/>
+          <circle fill="#1a1408" cx="37" cy="46" r="8"/>
+          <path fill="#b09050" d="M36,72 L50,72 L50,76 L36,76 Z"/>
+          <rect fill="#1a1408" x="38" y="71" width="3" height="6"/>
+          <rect fill="#1a1408" x="42" y="71" width="3" height="6"/>
+          <rect fill="#1a1408" x="46" y="71" width="3" height="6"/>
+        </g>
+        <!-- Right mechanical half -->
+        <g clip-path="url(#amR)">
+          <path fill="#6a4a18" d="M50,21 C71,21 80,34 80,46 C80,58 72,64 64,68 L64,76 L50,76 Z"/>
+          <line x1="60" y1="22" x2="62" y2="52" stroke="#3a2a0a" stroke-width="1.2"/>
+          <line x1="72" y1="30" x2="70" y2="56" stroke="#3a2a0a" stroke-width="1.2"/>
+          <circle fill="#1a1408" cx="63" cy="46" r="8"/>
+          <circle fill="none" stroke="#8e1812" stroke-width="1.5" cx="63" cy="46" r="6"/>
+          <line x1="63" y1="40" x2="63" y2="52" stroke="#c83020" stroke-width="0.8"/>
+          <line x1="57" y1="46" x2="69" y2="46" stroke="#c83020" stroke-width="0.8"/>
+          <circle fill="#c89030" cx="72" cy="32" r="2"/>
+          <circle fill="#c89030" cx="67" cy="25" r="1.5"/>
+          <path fill="#5a3a10" d="M50,72 L64,72 L64,76 L50,76 Z"/>
+          <rect fill="#1a1408" x="51" y="71" width="3" height="6"/>
+          <rect fill="#1a1408" x="55" y="71" width="3" height="6"/>
+          <rect fill="#1a1408" x="59" y="71" width="3" height="6"/>
+          <rect fill="#5a3a10" stroke="#3a2a0a" stroke-width="0.5" x="76" y="42" width="5" height="10" rx="1"/>
+        </g>
+        <!-- Nose cavity -->
+        <path fill="#1a1408" d="M47,59 L50,64 L53,59 Z"/>
+        <!-- Center split line (blood red) -->
+        <line x1="50" y1="21" x2="50" y2="76" stroke="#c83020" stroke-width="1" opacity="0.7"/>
+      </svg>
     </div>
-    <div class="header-sub">SACRED COGITATOR INTERFACE v2.4.0</div>
+    <div class="header-cog-row">
+      <span class="cog-icon reverse">&#9881;</span>
+      <h1>MECHANICUS<br>LINGUA CODEX</h1>
+      <span class="cog-icon">&#9881;</span>
+    </div>
+    <div class="header-sub">ADEPTUS MECHANICUS &#8212; SACRED COGITATOR INTERFACE</div>
     <div class="status-bar">
       <div class="status-dot" id="statusDot"></div>
-      <span class="status-text" id="statusText">CONNECTING TO MACHINE SPIRIT...</span>
+      <span class="status-text" id="statusText">COGITATOR LINK ESTABLISHING...</span>
     </div>
   </div>
 
-  <!-- PERSONA -->
+  <div class="disconnected-banner" id="disconnectedBanner">
+    &#9888; COGITATOR LINK SEVERED &#8212; DISCONNECTED MODE<br>
+    ALL RESPONSES ARE SIMULATED &#8212; NO DATA IS BEING PROCESSED
+  </div>
 
   <div class="section">
-    <div class="section-label">// PERSONA SELECTION</div>
+    <div class="section-label">PERSONA SELECTION</div>
     <div class="persona-grid">
+
       <div class="persona-card active" onclick="selectPersona(this, 'tech_priest')">
-        <div class="corner-tl"></div><div class="corner-tr"></div>
-        <div class="corner-bl"></div><div class="corner-br"></div>
-        <span class="persona-icon">🦾</span>
+        <div class="rivet tl"></div><div class="rivet tr"></div>
+        <div class="rivet bl"></div><div class="rivet br"></div>
+        <span class="persona-glyph">&#9881;</span>
         <span class="persona-name">TECH-PRIEST</span>
-        <span class="persona-desc">Cold machine logic<br>Techno-religious</span>
+        <span class="persona-desc">MAGOS DOMINUS<br>RITE OF PURE THOUGHT</span>
       </div>
+
       <div class="persona-card" onclick="selectPersona(this, 'skitarii')">
-        <div class="corner-tl"></div><div class="corner-tr"></div>
-        <div class="corner-bl"></div><div class="corner-br"></div>
-        <span class="persona-icon">⚔️</span>
+        <div class="rivet tl"></div><div class="rivet tr"></div>
+        <div class="rivet bl"></div><div class="rivet br"></div>
+        <span class="persona-glyph">&#10012;</span>
         <span class="persona-name">SKITARII</span>
-        <span class="persona-desc">Terse military<br>Battle-focused</span>
+        <span class="persona-desc">VEX-COHORT VANGUARD<br>COMBAT PROTOCOLS</span>
+      </div>
+
+      <div class="persona-card persona-card-wide" onclick="selectPersona(this, 'custom')">
+        <div class="rivet tl"></div><div class="rivet tr"></div>
+        <div class="rivet bl"></div><div class="rivet br"></div>
+        <span class="persona-glyph" style="font-size:22px">&#9672;</span>
+        <span class="persona-name">USER-DEFINED</span>
+        <span class="persona-desc">CUSTOM SYSTEM PROMPT &#8212; DEFINE PERSONA PARAMETERS</span>
+      </div>
+
+    </div>
+
+    <div class="custom-prompt-panel" id="customPromptPanel">
+      <div class="custom-prompt-label">&#9656; DEFINE PERSONA SYSTEM PROMPT</div>
+      <textarea id="customPromptInput" placeholder="Input persona definition. This text becomes the system prompt transmitted to the cogitator model."></textarea>
+    </div>
+
+    <div class="section-label">OUTPUT MODE</div>
+    <div class="mode-row">
+      <button class="mode-btn active" onclick="selectMode(this, 'reformulate')">&#9881; REFORMULATE</button>
+      <button class="mode-btn" onclick="selectMode(this, 'litany')">&#10013; LITANY</button>
+    </div>
+
+    <div class="section-label">INPUT LANGUAGE</div>
+    <div class="lang-row">
+      <button class="lang-btn active" onclick="selectLang(this, 'fr')">FRAN&#199;AIS [FR]</button>
+      <span class="lang-arrow">&#9658;</span>
+      <button class="lang-btn" onclick="selectLang(this, 'en')">ENGLISH [EN]</button>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-label">PROFANE INPUT &#8212; FLESH-WORDS</div>
+    <div class="input-panel">
+      <div class="input-header">
+        <span class="input-label-text">&#9656; BINARIC CONVERSION CHAMBER</span>
+        <span class="char-count" id="charCount">0 / 500</span>
+      </div>
+      <textarea id="inputText" placeholder="Input profane flesh-words for sacred transmutation into binaric cant..." maxlength="500" oninput="updateCharCount()"></textarea>
+      <div class="input-footer">
+        <button class="clear-btn" onclick="clearInput()">[ PURGE INPUT ]</button>
       </div>
     </div>
 
-```
-<!-- MODE -->
-<div class="section-label">// OUTPUT MODE</div>
-<div class="mode-row">
-  <button class="mode-btn active" onclick="selectMode(this, 'reformulate')">⚙ REFORMULATE</button>
-  <button class="mode-btn" onclick="selectMode(this, 'litany')">📜 LITANY</button>
-</div>
+    <button class="transmute-btn" id="transmuteBtn" onclick="transmute()">
+      &#9881;  INITIATE BINARIC CANT TRANSMUTATION  &#9881;
+    </button>
 
-<!-- LANGUAGE -->
-<div class="section-label">// INPUT LANGUAGE</div>
-<div class="lang-row">
-  <button class="lang-btn active" onclick="selectLang(this, 'fr')">🇫🇷 FRANÇAIS</button>
-  <span class="lang-arrow">→</span>
-  <button class="lang-btn" onclick="selectLang(this, 'en')">🇬🇧 ENGLISH</button>
-</div>
-
-<div class="divider"></div>
-
-<!-- INPUT -->
-<div class="section-label">// PROFANE INPUT — FLESH-WORDS</div>
-<div class="input-panel">
-  <div class="input-header">
-    <span class="input-label-text">BINARIC CONVERSION CHAMBER</span>
-    <span class="char-count" id="charCount">0 / 500</span>
-  </div>
-  <textarea
-    id="inputText"
-    placeholder="Enter your profane flesh-words for sacred transmutation..."
-    maxlength="500"
-    oninput="updateCharCount()"
-  ></textarea>
-  <div class="input-footer">
-    <button class="clear-btn" onclick="clearInput()">[ PURGE INPUT ]</button>
-  </div>
-</div>
-
-<!-- TRANSMUTE -->
-<button class="transmute-btn" id="transmuteBtn" onclick="transmute()">
-  ⚙ TRANSMUTE TO BINARIC CANT ⚙
-</button>
-
-<!-- PROCESSING -->
-<div class="processing-overlay" id="processingOverlay">
-  <div class="spinner"></div>
-  <div class="processing-text" id="processingText">INITIATING SACRED RITES...<br>CONSULTING THE OMNISSIAH...</div>
-</div>
-
-<!-- OUTPUT -->
-<div class="output-section" id="outputSection" style="display:none">
-  <div class="section-label">// SACRED OUTPUT — BINARIC CANT</div>
-
-  <div class="output-panel" id="enPanel">
-    <div class="output-header">
-      <span class="output-lang">🇬🇧 LINGUA ANGLICUS</span>
-      <button class="copy-btn" onclick="copyText('enOutput', this)">[ COPY ]</button>
+    <div class="processing-overlay" id="processingOverlay">
+      <div class="spinner"></div>
+      <div class="processing-text" id="processingText">INITIATING SACRED RITES...<br>CONSULTING THE OMNISSIAH...</div>
     </div>
-    <div class="output-body" id="enOutput"></div>
-    <div class="binary-ticker" id="enBinary">01001111 01101101 01101110 01101001 01110011 01110011 01101001 01100001 01101000</div>
-  </div>
 
-  <div class="output-panel" id="frPanel">
-    <div class="output-header">
-      <span class="output-lang">🇫🇷 LINGUA GALLICUS</span>
-      <button class="copy-btn" onclick="copyText('frOutput', this)">[ COPY ]</button>
+    <div class="output-section" id="outputSection" style="display:none">
+      <div class="section-label">SACRED OUTPUT &#8212; BINARIC CANT</div>
+      <div class="output-panels">
+        <div class="output-panel" id="enPanel">
+          <div class="output-header">
+            <span class="output-lang">LINGUA ANGLICUS [EN]</span>
+            <button class="copy-btn" onclick="copyText('enOutput', this)">[ COPY ]</button>
+          </div>
+          <div class="output-body" id="enOutput"></div>
+          <div class="binary-ticker" id="enBinary">01001111 01101101 01101110 01101001 01110011 01110011 01101001 01100001 01101000</div>
+        </div>
+        <div class="output-panel" id="frPanel">
+          <div class="output-header">
+            <span class="output-lang">LINGUA GALLICUS [FR]</span>
+            <button class="copy-btn" onclick="copyText('frOutput', this)">[ COPY ]</button>
+          </div>
+          <div class="output-body" id="frOutput"></div>
+          <div class="binary-ticker">01001101 01100001 01100011 01101000 01101001 01101110 01100101 00100000 01000111 01101111 01100100</div>
+        </div>
+      </div>
     </div>
-    <div class="output-body" id="frOutput"></div>
-    <div class="binary-ticker">01001101 01100001 01100011 01101000 01101001 01101110 01100101 00100000 01000111 01101111 01100100</div>
-  </div>
-</div>
-```
 
   </div>
-
-  <!-- FOOTER -->
 
   <div class="footer">
     <div class="footer-quote">"Knowledge is power, guard it well."</div>
   </div>
 
 </div>
-
 <script>
   let currentPersona = 'tech_priest';
   let currentMode    = 'reformulate';
   let currentLang    = 'fr';
   let USE_MOCK       = false;
+  let currentCustomPrompt = '';
 
-  // ── Mock responses (used when server is unreachable) ──────────────────────
   const MOCK = {
     tech_priest: {
       reformulate: {
         en: "01001111... Acknowledged. The flesh-vessel's request has been processed through the sacred cogitators of the Omnissiah. Compliance is mandatory; inefficiency is heresy against the Great Work.",
-        fr: "01001111... Reçu. La requête du vaisseau de chair a été traitée par les cogitateurs sacrés de l'Omnimessie. La conformité est obligatoire ; l'inefficacité est hérésie contre la Grande Œuvre."
+        fr: "01001111... Reçu. La requête du vaisseau de chair a été traitée par les cogitateurs sacrés de l'Omnimessie. La conformité est obligatoire ; l'inefficacité est hérésie contre la Grande Œuvre."
       },
       litany: {
         en: "LITANY OF THE SACRED COGITATOR\n\nLet the data flow pure and uncorrupted through the blessed circuits.\nSo it is written in the Omnissiah's code.\n\nLet the flesh-vessel be purged of biological error states.\nSo it is written in the Omnissiah's code.\n\n01001111 01101101 01101110 01101001 01110011 01110011 01101001 01100001 01101000",
@@ -744,11 +790,11 @@ text-align: center;
     }
   };
 
-  // ── Selectors ─────────────────────────────────────────────────────────────
   function selectPersona(el, persona) {
     document.querySelectorAll('.persona-card').forEach(c => c.classList.remove('active'));
     el.classList.add('active');
     currentPersona = persona;
+    document.getElementById('customPromptPanel').classList.toggle('visible', persona === 'custom');
   }
 
   function selectMode(el, mode) {
@@ -757,10 +803,10 @@ text-align: center;
     currentMode = mode;
     const ta = document.getElementById('inputText');
     if (mode === 'litany') {
-      ta.placeholder = 'Enter a theme or subject for your sacred litany (e.g. "the machine", "war", "data")...';
+      ta.placeholder = 'Input theme or subject for sacred litany composition...';
       ta.style.height = '70px';
     } else {
-      ta.placeholder = 'Enter your profane flesh-words for sacred transmutation...';
+      ta.placeholder = 'Input profane flesh-words for sacred transmutation into binaric cant...';
       ta.style.height = '100px';
     }
   }
@@ -773,7 +819,7 @@ text-align: center;
 
   function updateCharCount() {
     const t = document.getElementById('inputText');
-    document.getElementById('charCount').textContent = `${t.value.length} / 500`;
+    document.getElementById('charCount').textContent = t.value.length + ' / 500';
   }
 
   function clearInput() {
@@ -789,41 +835,42 @@ text-align: center;
     "COGITATOR PROCESSING...\nDATASLATE GENERATION ACTIVE...",
   ];
 
-  // ── Transmute ─────────────────────────────────────────────────────────────
   async function transmute() {
     const input = document.getElementById('inputText').value.trim();
     if (!input) {
-      document.getElementById('inputText').style.borderColor = 'var(--red)';
+      document.getElementById('inputText').style.borderColor = 'var(--blood-bright)';
       setTimeout(() => document.getElementById('inputText').style.borderColor = '', 1000);
       return;
     }
-
-    const btn           = document.getElementById('transmuteBtn');
-    const overlay       = document.getElementById('processingOverlay');
+    currentCustomPrompt = document.getElementById('customPromptInput').value.trim();
+    if (currentPersona === 'custom' && !currentCustomPrompt) {
+      const ta = document.getElementById('customPromptInput');
+      ta.style.borderColor = 'var(--blood-bright)';
+      setTimeout(() => ta.style.borderColor = '', 1000);
+      return;
+    }
+    const btn = document.getElementById('transmuteBtn');
+    const overlay = document.getElementById('processingOverlay');
     const outputSection = document.getElementById('outputSection');
-    const enEl          = document.getElementById('enOutput');
-    const frEl          = document.getElementById('frOutput');
-
+    const enEl = document.getElementById('enOutput');
+    const frEl = document.getElementById('frOutput');
     btn.classList.add('loading');
-    btn.textContent = '⚙ PROCESSING... ⚙';
+    btn.textContent = '⚙  PROCESSING — RITES IN PROGRESS  ⚙';
     btn.disabled = true;
     overlay.classList.add('visible');
     outputSection.style.display = 'none';
-
     let msgIdx = 0;
     const msgInterval = setInterval(() => {
       msgIdx = (msgIdx + 1) % processingMessages.length;
       document.getElementById('processingText').innerHTML = processingMessages[msgIdx];
     }, 1200);
-
     if (USE_MOCK) {
       await _transmuteMock(enEl, frEl, msgInterval, overlay, outputSection);
     } else {
       await _transmuteReal(input, enEl, frEl, msgInterval, overlay, outputSection);
     }
-
     btn.classList.remove('loading');
-    btn.textContent = '⚙ TRANSMUTE TO BINARIC CANT ⚙';
+    btn.textContent = '⚙  INITIATE BINARIC CANT TRANSMUTATION  ⚙';
     btn.disabled = false;
   }
 
@@ -832,7 +879,16 @@ text-align: center;
     clearInterval(msgInterval);
     overlay.classList.remove('visible');
     outputSection.style.display = 'block';
-    const resp = MOCK[currentPersona][currentMode];
+    let resp;
+    if (currentPersona === 'custom') {
+      const snip = currentCustomPrompt.slice(0, 80) + (currentCustomPrompt.length > 80 ? '...' : '');
+      resp = {
+        en: '[DISCONNECTED MODE] Custom persona active.\nSystem prompt: "' + snip + '"\n\nSimulated response only.',
+        fr: '[MODE DÉCONNECTÉ] Persona personnalisé actif.\nInvite : "' + snip + '"\n\nRéponse simulée uniquement.',
+      };
+    } else {
+      resp = MOCK[currentPersona][currentMode];
+    }
     await _streamText(enEl, resp.en);
     await _streamText(frEl, resp.fr);
   }
@@ -842,9 +898,8 @@ text-align: center;
       const resp = await fetch('/translate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: input, persona: currentPersona, mode: currentMode, input_lang: currentLang }),
+        body: JSON.stringify({ text: input, persona: currentPersona, mode: currentMode, input_lang: currentLang, custom_prompt: currentCustomPrompt }),
       });
-
       clearInterval(msgInterval);
       overlay.classList.remove('visible');
       outputSection.style.display = 'block';
@@ -852,11 +907,9 @@ text-align: center;
       frEl.textContent = '';
       enEl.classList.add('streaming');
       frEl.classList.add('streaming');
-
-      const reader  = resp.body.getReader();
+      const reader = resp.body.getReader();
       const decoder = new TextDecoder();
       let buf = '';
-
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
@@ -871,17 +924,14 @@ text-align: center;
           const token = JSON.parse(dataMatch[1]);
           if (evt === 'en') enEl.textContent += token;
           if (evt === 'fr') frEl.textContent += token;
-          if (evt === 'done') {
-            enEl.classList.remove('streaming');
-            frEl.classList.remove('streaming');
-          }
+          if (evt === 'done') { enEl.classList.remove('streaming'); frEl.classList.remove('streaming'); }
         }
       }
     } catch (err) {
       clearInterval(msgInterval);
       overlay.classList.remove('visible');
       outputSection.style.display = 'block';
-      enEl.textContent = `MACHINE SPIRIT FAILURE: ${err.message}`;
+      enEl.textContent = 'MACHINE SPIRIT FAILURE: ' + err.message;
       enEl.classList.remove('streaming');
       frEl.classList.remove('streaming');
     }
@@ -903,14 +953,10 @@ text-align: center;
       await navigator.clipboard.writeText(text);
       btn.textContent = '[ COPIED ]';
       btn.classList.add('copied');
-      setTimeout(() => {
-        btn.textContent = '[ COPY ]';
-        btn.classList.remove('copied');
-      }, 2000);
+      setTimeout(() => { btn.textContent = '[ COPY ]'; btn.classList.remove('copied'); }, 2000);
     } catch {}
   }
 
-  // ── Status check on load ──────────────────────────────────────────────────
   window.addEventListener('DOMContentLoaded', async () => {
     const dot  = document.getElementById('statusDot');
     const text = document.getElementById('statusText');
@@ -921,18 +967,18 @@ text-align: center;
         text.textContent = 'MISTRAL 7B — OMNISSIAH APPROVED';
       } else {
         text.textContent = 'MODEL NOT LOADED — CHECK OLLAMA';
-        dot.style.background = 'var(--red)';
-        dot.style.boxShadow  = '0 0 6px var(--red)';
+        dot.style.background = 'var(--blood-bright)';
+        dot.style.boxShadow  = '0 0 6px var(--blood-bright)';
       }
     } catch {
       USE_MOCK = true;
-      text.textContent     = 'DEMO MODE — SIMULATED RESPONSES';
-      dot.style.background = 'var(--gold-dim)';
-      dot.style.boxShadow  = '0 0 6px var(--gold-dim)';
+      text.textContent     = 'COGITATOR LINK SEVERED — DISCONNECTED MODE';
+      dot.style.background = 'var(--brass-bright)';
+      dot.style.boxShadow  = '0 0 6px var(--brass-bright)';
+      document.getElementById('disconnectedBanner').classList.add('visible');
     }
   });
 
-  // ── Binary ticker animation ───────────────────────────────────────────────
   setInterval(() => {
     document.querySelectorAll('.binary-ticker').forEach(el => {
       const bytes = Array.from({length: 9}, () =>
@@ -942,6 +988,5 @@ text-align: center;
     });
   }, 2000);
 </script>
-
 </body>
 </html>
