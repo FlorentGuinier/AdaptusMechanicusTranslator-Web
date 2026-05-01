@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="background:#0d0b07 !important">
+<html lang="en" style="background:#080e06 !important">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -12,24 +12,24 @@
   --blood:        #8e1812;
   --blood-bright: #c83020;
   --blood-dim:    #5a0e08;
-  --brass:        #6a4a18;
-  --brass-bright: #c09432;
-  --brass-dim:    #3a2a0a;
-  --panel:        #261e0c;
-  --panel2:       #322810;
-  --bone:         #d8b888;
-  --bone-dim:     #b08c52;
-  --bone-bright:  #e8c898;
-  --green:        #1e4e1c;
-  --green-bright: #52a044;
-  --border:       #3e2c16;
-  --border-hi:    #624020;
-  --scan: rgba(139,20,8,0.04);
+  --brass:        #7a5a1c;
+  --brass-bright: #d4aa38;
+  --brass-dim:    #42320c;
+  --panel:        #0e1e0a;
+  --panel2:       #162c10;
+  --bone:         #e8cc98;
+  --bone-dim:     #c0a060;
+  --bone-bright:  #f4deb0;
+  --green:        #1e5a1a;
+  --green-bright: #5ec44a;
+  --border:       #1e3e12;
+  --border-hi:    #305a1c;
+  --scan: rgba(40,100,20,0.05);
 }
-html { background: #0d0b07; color-scheme: dark; }
+html { background: #080e06; color-scheme: dark; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-  background: #0d0b07 !important;
+  background: #080e06 !important;
   color: var(--bone);
   font-family: 'Rajdhani', sans-serif;
   min-height: 100vh;
@@ -55,7 +55,7 @@ body::after {
   top: -150px; left: 50%;
   transform: translateX(-50%);
   width: 700px; height: 500px;
-  background: radial-gradient(circle, rgba(158,28,10,0.22) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(40,110,20,0.18) 0%, rgba(158,28,10,0.10) 50%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -180,7 +180,7 @@ body::after {
 .persona-card {
   background:
     repeating-linear-gradient(-45deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 4px),
-    linear-gradient(160deg, #2e2610 0%, #221c0a 100%);
+    linear-gradient(160deg, #162614 0%, #0e1a0a 100%);
   border: 1px solid var(--border);
   padding: 12px 8px;
   text-align: center;
@@ -200,7 +200,7 @@ body::after {
   border: 2px solid var(--blood-bright);
   background:
     repeating-linear-gradient(-45deg, rgba(139,20,8,0.12) 0px, rgba(139,20,8,0.12) 1px, transparent 1px, transparent 4px),
-    linear-gradient(160deg, #220c08 0%, #180804 100%);
+    linear-gradient(160deg, #1e1008 0%, #140a04 100%);
   box-shadow: 0 0 22px rgba(139,20,8,0.5), inset 0 0 20px rgba(139,20,8,0.08);
 }
 .persona-card.active::after { opacity: 1; }
@@ -208,7 +208,7 @@ body::after {
   border-color: var(--border-hi);
   background:
     repeating-linear-gradient(-45deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 4px),
-    linear-gradient(160deg, #342c12 0%, #28220e 100%);
+    linear-gradient(160deg, #1e3018 0%, #162410 100%);
 }
 .persona-card:hover:not(.active)::after { opacity: 0.4; }
 /* Rivets */
@@ -312,7 +312,7 @@ body::after {
 .mode-btn.active {
   border: 2px solid var(--blood-bright);
   color: var(--bone-bright);
-  background: linear-gradient(180deg, #240e08 0%, #180804 100%);
+  background: linear-gradient(180deg, #1c2e10 0%, #12200a 100%);
   box-shadow: 0 0 12px rgba(139,20,8,0.4), inset 0 0 8px rgba(139,20,8,0.1);
   text-shadow: 0 0 6px rgba(184,28,16,0.5);
 }
@@ -338,7 +338,7 @@ body::after {
 .lang-btn.active {
   border: 2px solid var(--blood-bright);
   color: var(--bone-bright);
-  background: linear-gradient(180deg, #240e08 0%, #180804 100%);
+  background: linear-gradient(180deg, #1c2e10 0%, #12200a 100%);
   box-shadow: 0 0 10px rgba(139,20,8,0.35);
 }
 .lang-btn:hover:not(.active) { background: var(--panel2); color: var(--bone); border-color: var(--border-hi); }
@@ -347,7 +347,7 @@ body::after {
 .input-panel {
   background:
     repeating-linear-gradient(-45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 4px),
-    linear-gradient(160deg, #2a2210 0%, #201a0c 100%);
+    linear-gradient(160deg, #162612 0%, #0e1c0a 100%);
   border: 1px solid var(--border);
   overflow: hidden;
   margin-bottom: 10px;
@@ -452,7 +452,7 @@ textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 1
 .output-panel {
   background:
     repeating-linear-gradient(-45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 4px),
-    linear-gradient(160deg, #2e2810 0%, #22200c 100%);
+    linear-gradient(160deg, #182e12 0%, #10200a 100%);
   border: 1px solid var(--border);
   overflow: hidden;
 }
@@ -520,7 +520,7 @@ textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 1
   gap: 10px;
   padding: 24px;
   background:
-    repeating-linear-gradient(-45deg, rgba(139,20,8,0.12) 0px, rgba(139,20,8,0.12) 2px, transparent 2px, transparent 6px),
+    repeating-linear-gradient(-45deg, rgba(40,100,20,0.12) 0px, rgba(40,100,20,0.12) 2px, transparent 2px, transparent 6px),
     var(--panel);
   border: 1px solid var(--blood-dim);
   margin-bottom: 14px;
