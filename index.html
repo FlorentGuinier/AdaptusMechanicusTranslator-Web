@@ -1049,8 +1049,8 @@ textarea::placeholder { color: var(--bone-dim); font-style: italic; font-size: 1
   }
 
   window.addEventListener('DOMContentLoaded', async () => {
-    const input = document.getElementById('serverUrlInput');
-    if (input && SERVER_URL) input.value = SERVER_URL;
+    const urlInput = document.getElementById('serverUrlInput');
+    if (urlInput && SERVER_URL) urlInput.value = SERVER_URL;
     await checkStatus();
   });
 
