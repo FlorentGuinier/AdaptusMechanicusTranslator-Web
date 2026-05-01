@@ -879,7 +879,7 @@ Return ONLY the reformulated text, no introduction or explanation.`;
       try { cachedPrompts = await (await fetch(SERVER_URL + '/prompts')).json(); }
       catch { return; }
     }
-    const prompt = cachedPrompts[persona]?.[currentMode] ?? '';
+    const prompt = cachedPrompts[persona] ?? '';
     if (!prompt) return;
     document.getElementById('customPromptInput').value = prompt;
     const customCard = document.querySelector('.persona-card-wide');
