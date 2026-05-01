@@ -1030,7 +1030,8 @@ Return ONLY the reformulated text, no introduction or explanation.`;
       USE_MOCK = false;
       banner.classList.remove('visible');
       if (d.ok) {
-        text.textContent     = 'OMNISSIAH APPROVED — MODEL READY';
+        const isLocal = !SERVER_URL || SERVER_URL.includes('localhost') || SERVER_URL.includes('127.0.0.1');
+        text.textContent     = isLocal ? 'LOCAL — OMNISSIAH APPROVED' : 'REMOTE — OMNISSIAH APPROVED';
         dot.style.background = 'var(--green-bright)';
         dot.style.boxShadow  = '0 0 5px var(--green-bright)';
       } else {
